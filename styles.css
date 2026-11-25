@@ -1,4 +1,5 @@
-.json-helper-view {
+.workspace-leaf-content[data-type="json-helper"] > .json-helper-view {
+    container: json-helper-view / inline-size;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -6,44 +7,113 @@
 
 .json-helper-toolbar {
     display: flex;
-    flex-wrap: wrap;
+    flex: none;
     align-items: center;
-    justify-content: space-between;
     gap: var(--size-4-2);
-    padding: var(--size-4-2) var(--size-4-3);
+    padding: var(--size-4-1) var(--size-4-2);
     border-bottom: 1px solid var(--background-modifier-border);
 }
 
-.json-helper-actions,
-.json-helper-search {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--size-4-2);
+.json-helper-search-slot {
+    flex: 1 1 18rem;
+    min-width: 0;
+    max-width: 28rem;
+}
+
+.json-helper-search-slot .cm-panels {
+    border: 0;
+    background: transparent;
 }
 
 .json-helper-search {
-    padding: var(--size-4-2) var(--size-4-3);
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-1);
 }
 
 .json-helper-search input {
-    flex: 1 1 12rem;
-    min-width: 0;
-    max-width: 20rem;
+    flex: 1;
+    min-width: 3rem;
+}
+
+.json-helper-search button,
+.json-helper-format,
+.json-helper-language {
+    flex: none;
+    min-width: 24px;
+    min-height: 24px;
+    white-space: nowrap;
+}
+
+button.json-helper-match,
+button.json-helper-language {
+    height: 24px;
+}
+
+button.json-helper-match {
+    width: 24px;
+    padding: 0;
+}
+
+button.json-helper-language {
+    padding: 0 var(--size-4-1);
+    font-size: var(--font-ui-smaller);
+    color: var(--text-muted);
 }
 
 .json-helper-search-status {
+    flex: none;
     color: var(--text-muted);
     font-size: var(--font-ui-small);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 .json-helper-status {
+    flex: 1 1 8rem;
+    min-width: 0;
+    text-align: end;
+    overflow-wrap: anywhere;
     font-size: var(--font-ui-small);
     color: var(--text-muted);
 }
 
 .json-helper-status.json-helper-error {
     color: var(--text-error);
+}
+
+@container json-helper-view (max-width: 28rem) {
+    .json-helper-toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas: "search format language" "status status status";
+        row-gap: 0;
+    }
+
+    .json-helper-search-slot {
+        grid-area: search;
+    }
+
+    .json-helper-search input {
+        min-width: 0;
+    }
+
+    .json-helper-status {
+        grid-area: status;
+        text-align: start;
+    }
+
+    .json-helper-status:not(.json-helper-error) {
+        display: none;
+    }
+
+    .json-helper-format {
+        grid-area: format;
+    }
+
+    .json-helper-language {
+        grid-area: language;
+    }
 }
 
 .json-helper-editor {

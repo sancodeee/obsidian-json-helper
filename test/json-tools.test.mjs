@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { applyEdits } from "jsonc-parser";
 import { getJsonDiagnostics, getJsonFormatEdits } from "../src/json-tools.mjs";
+import { getMessages } from "../src/messages.mjs";
 
 test("accepts strict JSON roots and rejects JSONC and malformed values", () => {
     for (const text of ["null", "0", '"中文"', "{}", "[false, -0, 1e+010]"]) {
@@ -19,6 +20,18 @@ test("reports both token errors and a missing token at the end of the file", () 
     assert.equal(first.to, first.from + 1);
     const missingBrace = '{"a":1';
     assert.ok(getJsonDiagnostics(missingBrace).some(({ from, to }) => from === missingBrace.length && to === from));
+});
+
+test("localizes diagnostics while preserving their source ranges", () => {
+    const json = '{\n  "test": ,\n}';
+    const [english] = getJsonDiagnostics(json, getMessages("en-US"));
+    const [chinese] = getJsonDiagnostics(json, getMessages("zh-CN"));
+    assert.equal(english.from, chinese.from);
+    assert.equal(english.to, chinese.to);
+    assert.match(english.message, /JSON value/);
+    assert.match(chinese.message, /JSON 值/);
+    assert.equal(getMessages("zh-TW").language, "zh");
+    assert.equal(getMessages("fr-FR").language, "en");
 });
 
 test("formats whitespace while preserving duplicate keys and exact number and string tokens", () => {
