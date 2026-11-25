@@ -1,5 +1,7 @@
 # JSON Helper
 
+![JSON Helper icon with white braces and a cyan magnifier](./assets/json-helper-icon.png)
+
 Edit, validate, format, and search JSON files directly in an Obsidian vault.
 
 ## Usage
