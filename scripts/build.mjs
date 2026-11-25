@@ -1,7 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { build } from "esbuild";
 
-const thirdPartyLicense = await readFile(new URL("../THIRD-PARTY-LICENSES.txt", import.meta.url), "utf8");
+const [projectLicense, thirdPartyLicense] = await Promise.all([
+    readFile(new URL("../LICENSE", import.meta.url), "utf8"),
+    readFile(new URL("../THIRD-PARTY-LICENSES.txt", import.meta.url), "utf8"),
+]);
+const licenseNotice = [projectLicense, "Bundled dependency: jsonc-parser", thirdPartyLicense]
+    .map((notice) => notice.replace(/\r\n/g, "\n").trim())
+    .join("\n\n");
 
 await build({
     entryPoints: ["src/main.mjs"],
@@ -13,5 +19,5 @@ await build({
     target: "es2018",
     external: ["obsidian", "@codemirror/*"],
     minify: true,
-    banner: { js: `/*! Bundled dependency: jsonc-parser\n${thirdPartyLicense.replace(/\r\n/g, "\n").trim()}\n*/` },
+    banner: { js: `/*!\n${licenseNotice}\n*/` },
 });

@@ -2,6 +2,7 @@
     "name": "json-helper",
     "version": "1.2.1",
     "private": true,
+    "license": "MIT",
     "scripts": {
         "build": "node scripts/build.mjs",
         "test": "node --test"
