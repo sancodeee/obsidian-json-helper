@@ -11,7 +11,7 @@ Open a `.json` file from the Files sidebar. The editor saves changes automatical
 
 ## Installation
 
-Install **JSON Helper** from Obsidian's Community plugins when the listing is available. To install manually, download `main.js`, `manifest.json`, and `styles.css` from a GitHub release and place them in `<vault>/.obsidian/plugins/json-helper/`. Restart Obsidian and enable the plugin under **Settings → Community plugins**.
+Install [JSON Helper](https://community.obsidian.md/plugins/json-helper) from Obsidian's Community plugins. To install manually, download `main.js`, `manifest.json`, and `styles.css` from the [latest GitHub release](https://github.com/sancodeee/obsidian-json-helper/releases/latest) and place them in `<vault>/.obsidian/plugins/json-helper/`. Restart Obsidian and enable the plugin under **Settings → Community plugins**.
 
 JSON Helper is free and runs locally. It uses no accounts, network requests, or telemetry. If another plugin already handles `.json` files, disable that handler before enabling JSON Helper.
 
@@ -24,7 +24,7 @@ JSON Helper is free and runs locally. It uses no accounts, network requests, or 
 - 点击「格式化」应用两空格缩进。格式化只调整空白，保留字段顺序、重复键、字符串转义和数字写法。可以用 `⌘Z` 或 `Ctrl+Z` 撤销。
 - 点击「查找」，或在编辑器中按 `⌘F`（Windows 和 Linux 为 `Ctrl+F`），可搜索当前文件中的字面文本。匹配会高亮，按 `Enter` 跳到下一处，按 `Shift+Enter` 返回上一处，按 `Esc` 关闭。
 
-社区条目上线后，可从 Obsidian「设置 → 第三方插件」安装。手动安装时，从 GitHub Release 下载 `main.js`、`manifest.json` 和 `styles.css`，放到 `<库>/.obsidian/plugins/json-helper/` 中。重启 Obsidian 后，在「第三方插件」中启用 **JSON Helper**。如果库使用了自定义配置目录，请使用该目录下的 `plugins/`。
+可从 Obsidian「设置 → 第三方插件」安装 [JSON Helper](https://community.obsidian.md/plugins/json-helper)。手动安装时，从 [GitHub Release](https://github.com/sancodeee/obsidian-json-helper/releases/latest) 下载 `main.js`、`manifest.json` 和 `styles.css`，放到 `<库>/.obsidian/plugins/json-helper/` 中。重启 Obsidian 后，在「第三方插件」中启用 **JSON Helper**。如果库使用了自定义配置目录，请使用该目录下的 `plugins/`。
 
 ## Development
 
