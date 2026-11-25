@@ -1,0 +1,74 @@
+.json-helper-view {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.json-helper-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-4-2);
+    padding: var(--size-4-2) var(--size-4-3);
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.json-helper-actions,
+.json-helper-search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--size-4-2);
+}
+
+.json-helper-search {
+    padding: var(--size-4-2) var(--size-4-3);
+}
+
+.json-helper-search input {
+    flex: 1 1 12rem;
+    min-width: 0;
+    max-width: 20rem;
+}
+
+.json-helper-search-status {
+    color: var(--text-muted);
+    font-size: var(--font-ui-small);
+}
+
+.json-helper-status {
+    font-size: var(--font-ui-small);
+    color: var(--text-muted);
+}
+
+.json-helper-status.json-helper-error {
+    color: var(--text-error);
+}
+
+.json-helper-editor {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+
+.json-helper-editor > .cm-editor {
+    height: 100%;
+}
+
+.json-helper-editor .cm-editor .cm-scroller {
+    overflow: auto;
+    font-family: var(--font-monospace);
+    font-size: var(--font-text-size);
+}
+
+.json-helper-editor .cm-editor .cm-gutters {
+    color: var(--text-muted);
+    background: var(--background-primary);
+    border-color: var(--background-modifier-border);
+}
+
+.json-helper-editor .cm-editor .cm-panels {
+    color: var(--text-normal);
+    background: var(--background-primary);
+}
