@@ -1,0 +1,73 @@
+name: Release JSON Helper
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Validate version and build release assets
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const manifest = require('./manifest.json');
+          const version = process.env.GITHUB_REF_NAME;
+          assert.match(version, /^\d+\.\d+\.\d+$/);
+          assert.equal(manifest.version, version);
+          assert.equal(require('./package.json').version, version);
+          assert.equal(require('./versions.json')[version], manifest.minAppVersion);
+          NODE
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm test
+          npm run build
+          node --check main.js
+
+      - name: Attest release assets
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          create-storage-record: false
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          release_is_draft=$(gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+            --json isDraft --jq .isDraft 2>/dev/null) || release_is_draft=missing
+          if [ "$release_is_draft" = false ]; then
+            echo "Release $GITHUB_REF_NAME is already published."
+            exit 0
+          fi
+          if [ "$release_is_draft" = missing ]; then
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              --draft --verify-tag --generate-notes --title "JSON Helper $GITHUB_REF_NAME"
+          fi
+          gh release upload "$GITHUB_REF_NAME" main.js manifest.json styles.css \
+            --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false --latest

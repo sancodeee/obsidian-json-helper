@@ -30,6 +30,8 @@ JSON Helper is free and runs locally. It uses no accounts, network requests, or 
 
 Run `npm ci`, `npm test`, and `npm run build`. The build produces `main.js`.
 
+Pushing a version tag runs the [release workflow](.github/workflows/release.yml). It builds and attests `main.js`, `manifest.json`, and `styles.css`, then publishes those three files as the release assets.
+
 JSON Helper uses Obsidian's built-in CodeMirror packages and bundles Microsoft's MIT-licensed [jsonc-parser](https://github.com/microsoft/node-jsonc-parser). The dependency's license is in [THIRD-PARTY-LICENSES.txt](THIRD-PARTY-LICENSES.txt) and is embedded in the JavaScript bundle.
 
 ## License
